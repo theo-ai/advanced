@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psarros Enterprise</title>
+    
+    <style>        
+        /* Style inputs, select elements and textareas */
+        input[type=text], select, textarea{
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        
+        /* Style the label to display next to the inputs */
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+  
+        /* Style the submit button */
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        
+        /* Style the container */
+        .container {
+            border-radius: 5px;
+            background-color: 'lightgrey';
+            padding: 20px;
+        }
+        
+        /* Floating column for labels: 25% width */
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+        
+        /* Floating column for inputs: 75% width */
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+        
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-25, .col-75, input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+            }
+        } 
+    </style>
+</head>
+<body bgcolor="lightgrey">
+
+    
+
+<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Top Navigation Menu -->
+<div class="topnav">
+    <a href="/" class="active"><style> h3{text-align: center;} </style><h3>Psarros Enterprise</h3></a>
+    <!-- Navigation links (hidden by default) -->
+    <!-- Here we add new pages if we want. <a href="name of the path in ulrs.py">display name in the dropdown list</a> -->
+    <div id="myLinks">
+        <a href="/about"><h3>About</h3></a>
+        <a href="/products"><h3>Products</h3></a>
+        <a href="/contact"><h3>Contact Us</h3></a>
+        <!-- the following statement can be uncommented if we need to register simple users -->
+        <!-- <a href="/accounts/register"><h3>Register</h3></a> -->
+        <a href="/accounts/login"><h3>Login</h3></a>
+    </div>
+    <!-- "Hamburger menu" / "Bar icon" to toggle the navigation links -->
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div> 
+
+<style>
+    /* Style the navigation menu */
+.topnav {
+    overflow: hidden;
+    background-color: lightskyblue;
+    position: relative;
+}
+
+/* Hide the links inside the navigation menu (except for logo/home) */
+.topnav #myLinks {
+    display: none;
+}
+
+/* Style navigation menu links */
+.topnav a {
+    color: black;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+/* Style the hamburger menu */
+.topnav a.icon {
+    background: lightslategray;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    /* the following line changes the size of the container of the "hamburger" icon */
+    padding: 35.5px 40px
+}
+
+/* Add a lightskyblue background color on mouse-over */
+.topnav a:hover {
+    background-color:lightskyblue;
+    color: black;
+}
+
+.topnav:hover {
+    background-color:lightslategrey;
+    color: black;
+}
+
+/* Style the active link (or home/logo) */
+.active {
+    background-color: lightslategray;
+    color: black;
+} 
+</style>
+
+<script>
+    /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
+    function myFunction() {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        }else{
+            x.style.display = "block";
+        }
+    } 
+</script>
+
+    {% block content %}
+
+    {% endblock%}
+    
+</body>
+</html>
