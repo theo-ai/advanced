@@ -27,12 +27,12 @@ def db(request):
 
     #This part (until the final render of the page) is needed for keeping the reports info on display
     dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
-    dateEnd = datetime.datetime.now() - datetime.timedelta(days=(1*365)-30)
+    dateEnd = datetime.datetime.now() - datetime.timedelta(days=(2*365)-30)
     days = 335
 
-    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
+    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
     # Show 1 calendar entry per page
-    paginator = Paginator(report_list, 1) 
+    paginator = Paginator(report_list, 1)
 
     #Getting the current page in order to move the next or previous
     page = request.GET.get('page')
@@ -55,7 +55,7 @@ def db(request):
     return render(request, 'db.html',{'report':report,})
 
 #This is here in case we need it and we find something
-#faulty in the "installationManual" presentation 
+#faulty in the "installationManual" presentation
 
 # def installationManualShow(request):
 
@@ -128,7 +128,7 @@ def insert_complete(request):
     #and we are entering it to the database
     #first we create the calendar item to hold the calendar input
     cal = calendar()
-    
+
     date_temp = request.POST['date']
     #converting string "date_temp" to datetime "date"
     if date_temp != "":
@@ -161,8 +161,8 @@ def insert_complete(request):
 
     cal.save(force_insert=True)
 
-    #after we finish the calendar insert we check if the client 
-    #already exists or not and in the first case we need to 
+    #after we finish the calendar insert we check if the client
+    #already exists or not and in the first case we need to
     #create the new client
 
     cl = client()
@@ -197,35 +197,39 @@ def insert_complete(request):
             cl.save(force_insert=True)
     except search.DoesNotExist:
         return render(request, 'db.html')
-    
-    #This part (until the final render of the page) is needed for keeping the reports info on display
-    dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
-    dateEnd = datetime.datetime.now() - datetime.timedelta(days=(1*365)-30)
-    days = 335
 
-    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
-    # Show 1 calendar entry per page
-    paginator = Paginator(report_list, 1) 
+    #This part is to redirect us back to db. We avoid having the url with "/insert_complete" at the end which causes issues with search of next report pages (Next>>)
+    return redirect ('db')
 
-    #Getting the current page in order to move the next or previous
-    page = request.GET.get('page')
-
-    try:
-        report = paginator.page(page)
-        return render(request, 'db.html',{'report':report})
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        report = paginator.page(1)
-        return render(request, 'db.html',{'report':report})
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        report = paginator.page(paginator.num_pages)
-        return render(request, 'db.html',{'report':report})
-    except calendar.DoesNotExist:
-        return redirect ('db')
-
-
-    return render(request, 'db.html',{'report':report})
+    #I'm keeping the herebelow part in case i need to undo the above line (for whatever reason that might happen)
+    ##This part (until the final render of the page) is needed for keeping the reports info on display
+    #dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
+    #dateEnd = datetime.datetime.now() - datetime.timedelta(days=(2*365)-30)
+    #days = 335
+    #
+    #report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
+    ## Show 1 calendar entry per page
+    #paginator = Paginator(report_list, 1)
+    #
+    ##Getting the current page in order to move the next or previous
+    #page = request.GET.get('page')
+    #
+    #try:
+    #    report = paginator.page(page)
+    #    return render(request, 'db.html',{'report':report})
+    #except PageNotAnInteger:
+    #    # If page is not an integer, deliver first page.
+    #    report = paginator.page(1)
+    #    return render(request, 'db.html',{'report':report})
+    #except EmptyPage:
+    #    # If page is out of range (e.g. 9999), deliver last page of results.
+    #    report = paginator.page(paginator.num_pages)
+    #    return render(request, 'db.html',{'report':report})
+    #except calendar.DoesNotExist:
+    #    return redirect ('db')
+    #
+    #
+    #return render(request, 'db.html',{'report':report})
 
 def update_complete(request):
 
@@ -304,36 +308,39 @@ def update_complete(request):
         cal.installationManual = cal.installationManual
 
     cal.save(update_fields=["date","surname","name","address","city","phone","email","job_type","category","price","paid","comments","installationManual"])
- 
-    #This part (until the final render of the page) is needed for keeping the reports info on display
-    dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
-    dateEnd = datetime.datetime.now() - datetime.timedelta(days=(1*365)-30)
-    days = 335
 
-    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
-    # Show 1 calendar entry per page
-    paginator = Paginator(report_list, 1) 
+    #This part is to redirect us back to db. We avoid having the url with "/insert_complete" at the end which causes issues with search of next report pages (Next>>)
+    return redirect ('db')
 
-    #Getting the current page in order to move the next or previous
-    page = request.GET.get('page')
-
-    try:
-        report = paginator.page(page)
-        return render(request, 'db.html',{'report':report})
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        report = paginator.page(1)
-        return render(request, 'db.html',{'report':report})
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        report = paginator.page(paginator.num_pages)
-        return render(request, 'db.html',{'report':report})
-    except calendar.DoesNotExist:
-        return redirect ('db')
-
-
-    return render(request, 'db.html',{'report':report})
-
+    #I'm keeping the herebelow part in case i need to undo the above line (for whatever reason that might happen)
+    ##This part (until the final render of the page) is needed for keeping the reports info on display
+    #dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
+    #dateEnd = datetime.datetime.now() - datetime.timedelta(days=(2*365)-30)
+    #days = 335
+    #
+    #report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
+    ## Show 1 calendar entry per page
+    #paginator = Paginator(report_list, 1)
+    #
+    ##Getting the current page in order to move the next or previous
+    #page = request.GET.get('page')
+    #
+    #try:
+    #    report = paginator.page(page)
+    #    return render(request, 'db.html',{'report':report})
+    #except PageNotAnInteger:
+    #    # If page is not an integer, deliver first page.
+    #    report = paginator.page(1)
+    #    return render(request, 'db.html',{'report':report})
+    #except EmptyPage:
+    #    # If page is out of range (e.g. 9999), deliver last page of results.
+    #    report = paginator.page(paginator.num_pages)
+    #    return render(request, 'db.html',{'report':report})
+    #except calendar.DoesNotExist:
+    #    return redirect ('db')
+    #
+    #
+    #return render(request, 'db.html',{'report':report})
 
 def search_complete_client(request):
 
@@ -384,7 +391,7 @@ def insert_complete_client(request):
 
     #first we create the client item to hold the client input
     cl = client()
-    
+
     cl.surname = request.POST['surname']
     cl.name = request.POST['name']
     cl.address = request.POST['address']
@@ -416,34 +423,38 @@ def insert_complete_client(request):
     except search.DoesNotExist:
         return render(request, 'db.html', {'name':'Theo'})
 
-    #This part (until the final render of the page) is needed for keeping the reports info on display
-    dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
-    dateEnd = datetime.datetime.now() - datetime.timedelta(days=(1*365)-30)
-    days = 335
+    #This part is to redirect us back to db. We avoid having the url with "/insert_complete" at the end which causes issues with search of next report pages (Next>>)
+    return redirect ('db')
 
-    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
-    # Show 1 calendar entry per page
-    paginator = Paginator(report_list, 1) 
-
-    #Getting the current page in order to move the next or previous
-    page = request.GET.get('page')
-
-    try:
-        report = paginator.page(page)
-        return render(request, 'db.html',{'report':report})
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        report = paginator.page(1)
-        return render(request, 'db.html',{'report':report})
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        report = paginator.page(paginator.num_pages)
-        return render(request, 'db.html',{'report':report})
-    except calendar.DoesNotExist:
-        return redirect ('db')
-
-
-    return render(request, 'db.html',{'report':report})
+    #I'm keeping the herebelow part in case i need to undo the above line (for whatever reason that might happen)
+    ##This part (until the final render of the page) is needed for keeping the reports info on display
+    #dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
+    #dateEnd = datetime.datetime.now() - datetime.timedelta(days=(2*365)-30)
+    #days = 335
+    #
+    #report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
+    ## Show 1 calendar entry per page
+    #paginator = Paginator(report_list, 1)
+    #
+    ##Getting the current page in order to move the next or previous
+    #page = request.GET.get('page')
+    #
+    #try:
+    #    report = paginator.page(page)
+    #    return render(request, 'db.html',{'report':report})
+    #except PageNotAnInteger:
+    #    # If page is not an integer, deliver first page.
+    #    report = paginator.page(1)
+    #    return render(request, 'db.html',{'report':report})
+    #except EmptyPage:
+    #    # If page is out of range (e.g. 9999), deliver last page of results.
+    #    report = paginator.page(paginator.num_pages)
+    #    return render(request, 'db.html',{'report':report})
+    #except calendar.DoesNotExist:
+    #    return redirect ('db')
+    #
+    #
+    #return render(request, 'db.html',{'report':report})
 
 def update_complete_client(request):
 
@@ -491,34 +502,38 @@ def update_complete_client(request):
 
     cl.save(update_fields=["surname","name","address","city","phone","email","comments"])
 
-    #This part (until the final render of the page) is needed for keeping the reports info on display
-    dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
-    dateEnd = datetime.datetime.now() - datetime.timedelta(days=(1*365)-30)
-    days = 335
+    #This part is to redirect us back to db. We avoid having the url with "/insert_complete" at the end which causes issues with search of next report pages (Next>>)
+    return redirect ('db')
 
-    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
-    # Show 1 calendar entry per page
-    paginator = Paginator(report_list, 1) 
-
-    #Getting the current page in order to move the next or previous
-    page = request.GET.get('page')
-
-    try:
-        report = paginator.page(page)
-        return render(request, 'db.html',{'report':report})
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        report = paginator.page(1)
-        return render(request, 'db.html',{'report':report})
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        report = paginator.page(paginator.num_pages)
-        return render(request, 'db.html',{'report':report})
-    except calendar.DoesNotExist:
-        return redirect ('db')
-
-
-    return render(request, 'db.html',{'report':report})
+    #I'm keeping the herebelow part in case i need to undo the above line (for whatever reason that might happen)
+    ##This part (until the final render of the page) is needed for keeping the reports info on display
+    #dateStart = datetime.datetime.now() - datetime.timedelta(days=2*365)
+    #dateEnd = datetime.datetime.now() - datetime.timedelta(days=(2*365)-30)
+    #days = 335
+    #
+    #report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
+    ## Show 1 calendar entry per page
+    #paginator = Paginator(report_list, 1)
+    #
+    ##Getting the current page in order to move the next or previous
+    #page = request.GET.get('page')
+    #
+    #try:
+    #    report = paginator.page(page)
+    #    return render(request, 'db.html',{'report':report})
+    #except PageNotAnInteger:
+    #    # If page is not an integer, deliver first page.
+    #    report = paginator.page(1)
+    #    return render(request, 'db.html',{'report':report})
+    #except EmptyPage:
+    #    # If page is out of range (e.g. 9999), deliver last page of results.
+    #    report = paginator.page(paginator.num_pages)
+    #    return render(request, 'db.html',{'report':report})
+    #except calendar.DoesNotExist:
+    #    return redirect ('db')
+    #
+    #
+    #return render(request, 'db.html',{'report':report})
 
 
 def add(request):
