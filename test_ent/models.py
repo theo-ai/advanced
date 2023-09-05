@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class calendar(models.Model):
+class Calendar(models.Model):
     date = models.DateField()
     surname = models.CharField(max_length=40)
     name = models.CharField(max_length=40)
@@ -15,12 +15,12 @@ class calendar(models.Model):
     price = models.FloatField(default=0)
     paid = models.FloatField(default=0)
     comments = models.TextField()
-    installationManual = models.FileField(upload_to='Installation Manuals/')
+    installation_manual = models.FileField(upload_to='Installation Manuals/')
 
     def __str__(self):
         return self.surname
 
-class client(models.Model):
+class Client(models.Model):
     surname = models.CharField(max_length=40)
     name = models.CharField(max_length=40)
     address = models.CharField(max_length=80)
