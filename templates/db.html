@@ -1,55 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="updateClient" class="tabcontent">
-    <h1>Hello {{ name }}!!!!!!!!!</h1>
-    <h2>Some Client's data needs to be updated/changed</h2>
-    <script>
-        var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
-        var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
-        countUClient = 0;
-
-        function updateDropdownClient() {
-            // This if statement exists to prevent the list from loading more than once
-            if (countUClient == 0) {
-                var categorySel = document.getElementById("categoryUCLient");
-                var job_typeSel = document.getElementById("job_typeUCLient");
-                var i = 0;
-                for (var x in categoryObject) {
-                    categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                    i++
-                }
-                i = 0;
-                for (var x in job_typeObject) {
-                    job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                    i++
-                }
-                countUClient = 1;
-            }
-        }
-
-    </script>
-
-    <div class="container">
-        <form action="update_complete_client" method='post'>
-            {% csrf_token %}
-
-            <div class="row">
-                <div class="col-25">
-                    <label>Client's ID</label>
-                </div>
-                <div class="col-75">
-                    <input type="text" name="id" placeholder="The ID of the client you want to change">
-                </div>
-            </div>
-
-            <!-- Other form fields for updating client data go here -->
-
-            <input type="submit" id="submitButtonUClient" value="Ready to submit on Database">
-        </form>
-    </div>
-</div>
-
 <div id="calendar" class="tabcontent_head">
     <h1>Hello {{ name }}!!!!!!!!!</h1>
     <h2>You can work on the below functions regarding Calendar</h2>
@@ -213,6 +164,18 @@
                 </script>
             </form>
         </div>
+    </div>
+
+    <div id="client" class="tabcontent_head">
+        <!-- Add client-related content and functionality here -->
+        <h1>Client Section</h1>
+        <!-- Add client-related content and functionality here -->
+    </div>
+
+    <div id="reports" class="tabcontent_head">
+        <!-- Add reports-related content and functionality here -->
+        <h1>Reports Section</h1>
+        <!-- Add reports-related content and functionality here -->
     </div>
 </div>
 {% endblock %}
