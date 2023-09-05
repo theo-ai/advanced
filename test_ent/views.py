@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import calendar, client
+from .models import Calendar, Client
 from django.db.models import Q
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
