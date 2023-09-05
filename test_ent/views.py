@@ -87,6 +87,14 @@ def update_complete(request, id):
 
 # Add more views as needed...
 
+def add(request):
+
+    val1 = int(request.POST['num1'])
+    val2 = int(request.POST['num2'])
+    rs = val1+val2
+
+    return render(request, 'result.html', {'result':rs})
+
 def about(request):
     return render(request, 'about.html')
 
