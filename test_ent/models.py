@@ -14,7 +14,7 @@ class Calendar(models.Model):
     category = models.CharField(max_length=40)
     price = models.FloatField(default=0)
     paid = models.FloatField(default=0)
-    comments = models.TextField()
+    comments = models.TextField(default=" ")
     installation_manual = models.FileField(upload_to='Installation Manuals/')
 
     def __str__(self):
