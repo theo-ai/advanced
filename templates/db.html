@@ -1,51 +1,216 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<div id="tabContainer">
-    <div id="calendar" class="tabcontent_head">
+<div id="updateClient" class="tabcontent">
+    <h1>Hello {{ name }}!!!!!!!!!</h1>
+    <h2>Some Client's data needs to be updated/changed</h2>
+    <script>
+        var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
+        var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
+        countUClient = 0;
+
+        function updateDropdownClient() {
+            // This if statement exists to prevent the list from loading more than once
+            if (countUClient == 0) {
+                var categorySel = document.getElementById("categoryUCLient");
+                var job_typeSel = document.getElementById("job_typeUCLient");
+                var i = 0;
+                for (var x in categoryObject) {
+                    categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                    i++
+                }
+                i = 0;
+                for (var x in job_typeObject) {
+                    job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                    i++
+                }
+                countUClient = 1;
+            }
+        }
+
+    </script>
+
+    <div class="container">
+        <form action="update_complete_client" method='post'>
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-25">
+                    <label>Client's ID</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="id" placeholder="The ID of the client you want to change">
+                </div>
+            </div>
+
+            <!-- Other form fields for updating client data go here -->
+
+            <input type="submit" id="submitButtonUClient" value="Ready to submit on Database">
+        </form>
+    </div>
+</div>
+
+<div id="calendar" class="tabcontent_head">
+    <h1>Hello {{ name }}!!!!!!!!!</h1>
+    <h2>You can work on the below functions regarding Calendar</h2>
+
+    <button class="tablink" onclick="searchDropdownCalendar();openPage('searchCalendar', this, 'royalblue')">Search</button>
+    <button class="tablink" onclick="insertDropdownCalendar();openPage('insertCalendar', this, 'crimson')" id="defaultOpen">Insert</button>
+    <button class="tablink" onclick="updateDropdownCalendar();openPage('updateCalendar', this, 'lightgoldenrodyellow')">Update</button>
+
+    <div id="searchCalendar" class="tabcontent">
         <h1>Hello {{ name }}!!!!!!!!!</h1>
-        <h2>You can work on the below functions regarding Calendar</h2>
+        <h2>Search by any of the below field or combination of them</h2>
+        <script>
+            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
+            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
+            countSCalendar = 0;
 
-        <button class="tablink" onclick="openTab('searchCalendar')">Search</button>
-        <button class="tablink" onclick="openTab('insertCalendar')" id="defaultOpen">Insert</button>
-        <button class="tablink" onclick="openTab('updateCalendar')">Update</button>
+            function searchDropdownCalendar() {
+                // This if statement exists to prevent the list from loading more than once
+                if (countSCalendar == 0) {
+                    var categorySel = document.getElementById("categorySCal");
+                    var job_typeSel = document.getElementById("job_typeSCal");
+                    var i = 0;
+                    for (var x in categoryObject) {
+                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                        i++
+                    }
+                    i = 0;
+                    for (var x in job_typeObject) {
+                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                        i++
+                    }
+                    countSCalendar = 1;
+                }
+            }
 
-        <!-- Search Calendar Tab -->
-        <div id="searchCalendar" class="tabcontent">
-            <h1>Hello {{ name }}!!!!!!!!!</h1>
-            <h2>Search by any of the below field or combination of them</h2>
+        </script>
 
-            <form action="{% url 'search_complete' %}" method="post">
+        <div class="container">
+            <form action="search_complete" method='post'>
                 {% csrf_token %}
-                {{ search_form.as_p }}
 
-                <input type="submit" value="Search">
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's ID</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="id" placeholder="Visit's ID">
+                    </div>
+                </div>
+
+                <!-- Other form fields for searching calendar data go here -->
+
+                <input type="submit" id="submitButtonSCalendar" value="Search">
             </form>
         </div>
+    </div>
 
-        <!-- Insert Calendar Tab -->
-        <div id="insertCalendar" class="tabcontent">
-            <h1>Hello {{ name }}!!!!!!!!!</h1>
-            <h2>It's time to enter some data into the Database</h2>
+    <div id="insertCalendar" class="tabcontent">
+        <h1>Hello {{ name }}!!!!!!!!!</h1>
+        <h2>It's time to enter some data into the Database</h2>
+        <script>
+            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
+            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
+            countICalendar = 0;
 
-            <form action="{% url 'insert_complete' %}" method="post" enctype="multipart/form-data">
+            function insertDropdownCalendar() {
+                // This if statement exists to prevent the list from loading more than once
+                if (countICalendar == 0) {
+                    var categorySel = document.getElementById("categoryICal");
+                    var job_typeSel = document.getElementById("job_typeICal");
+                    var i = 0;
+                    for (var x in categoryObject) {
+                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                        i++
+                    }
+                    i = 0;
+                    for (var x in job_typeObject) {
+                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                        i++
+                    }
+                    countICalendar = 1;
+                }
+            }
+
+        </script>
+
+        <div class="container">
+            <form action="insert_complete" method='post' enctype='mutlipart/form-data'>
                 {% csrf_token %}
-                {{ insert_form.as_p }}
 
-                <input type="submit" value="Ready to submit on Database">
+                <div class="row">
+                    <div class="col-25">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="date" placeholder="Date of the visit (YYYY/mm/dd)">
+                    </div>
+                </div>
+
+                <!-- Other form fields for inserting calendar data go here -->
+
+                <input type="submit" id="submitButtonICalendar" value="Ready to submit on Database" onclick="buttonClickICalendar()">
+                <script type="text/javascript">
+                    function buttonClickICalendar() {
+                        window.alert("Submission complete! Thank you for your contribution!");
+                    }
+                </script>
             </form>
         </div>
+    </div>
 
-        <!-- Update Calendar Tab -->
-        <div id="updateCalendar" class="tabcontent">
-            <h1>Hello {{ name }}!!!!!!!!!</h1>
-            <h2>Some Client's data needs to be updated/changed</h2>
+    <div id="updateCalendar" class="tabcontent">
+        <h1>Hello {{ name }}!!!!!!!!!</h1>
+        <h2>Some Client's data needs to be updated/changed</h2>
+        <script>
+            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
+            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
+            countUCalendar = 0;
 
-            <form action="{% url 'update_complete' %}" method="post" enctype="multipart/form-data">
+            function updateDropdownCalendar() {
+                // This if statement exists to prevent the list from loading more than once
+                if (countUCalendar == 0) {
+                    var categorySel = document.getElementById("categoryUCal");
+                    var job_typeSel = document.getElementById("job_typeUCal");
+                    var i = 0;
+                    for (var x in categoryObject) {
+                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                        i++
+                    }
+                    i = 0;
+                    for (var x in job_typeObject) {
+                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                        i++
+                    }
+                    countUCalendar = 1;
+                }
+            }
+
+        </script>
+
+        <div class="container">
+            <form action="update_complete" method='post' enctype='mutlipart/form-data'>
                 {% csrf_token %}
-                {{ update_form.as_p }}
 
-                <input type="submit" value="Update">
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit ID</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="id" placeholder="Visit's ID">
+                    </div>
+                </div>
+
+                <!-- Other form fields for updating calendar data go here -->
+
+                <input type="submit" id="submitButtonUCalendar" value="Ready to submit on Database" onclick="buttonClickUCalendar()">
+                <script type="text/javascript">
+                    function buttonClickUCalendar() {
+                        window.alert("Update complete! Thank you for the fix");
+                    }
+                </script>
             </form>
         </div>
     </div>
