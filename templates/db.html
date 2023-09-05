@@ -723,43 +723,16 @@
     <h1>Hello {{ name }}!!!!!!!!!</h1>
     <h2>You can work on the below functions regarding Calendar</h2>
 
-    <button class="tablink" onclick="searchDropdownCalendar();openPage('searchCalendar', this, 'royalblue')">Search</button>
-    <button class="tablink" onclick="insertDropdownCalendar();openPage('insertCalendar', this, 'crimson')" id="defaultOpen">Insert</button>
-    <button class="tablink" onclick="updateDropdownCalendar();openPage('updateCalendar', this, 'lightgoldenrodyellow')">Update</button>
+    <button class="tablink" onclick="openTab('searchCalendar', this, 'royalblue')">Search</button>
+    <button class="tablink" onclick="openTab('insertCalendar', this, 'crimson')" id="defaultOpen">Insert</button>
+    <button class="tablink" onclick="openTab('updateCalendar', this, 'lightgoldenrodyellow')">Update</button>
 
     <div id="searchCalendar" class="tabcontent">
         <h1>Hello {{ name }}!!!!!!!!!</h1>
-        <h2>Search by any of the below field or combination of them</h2>
-        <script>
-            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
-            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
-            countSCalendar = 0;
-
-            function searchDropdownCalendar() {
-                // This if statement exists to prevent the list from loading more than once
-                if (countSCalendar == 0) {
-                    var categorySel = document.getElementById("categorySCal");
-                    var job_typeSel = document.getElementById("job_typeSCal");
-                    var i = 0;
-                    for (var x in categoryObject) {
-                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                        i++
-                    }
-                    i = 0;
-                    for (var x in job_typeObject) {
-                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                        i++
-                    }
-                    countSCalendar = 1;
-                }
-            }
-
-        </script>
-
-        <div class="container">
-            <form action="search_complete" method='post'>
-                {% csrf_token %}
-
+        <h2>Search by any of the below fields or combination of them</h2>
+        <form action="search_complete" method="post">
+            {% csrf_token %}
+            <div class="container">
                 <div class="row">
                     <div class="col-25">
                         <label>Visit's ID</label>
@@ -769,100 +742,246 @@
                     </div>
                 </div>
 
-                <!-- Other form fields for searching calendar data go here -->
-
-                <input type="submit" id="submitButtonSCalendar" value="Search">
-            </form>
-        </div>
-    </div>
-
-    <div id="insertCalendar" class="tabcontent">
-        <h1>Hello {{ name }}!!!!!!!!!</h1>
-        <h2>It's time to enter some data into the Database</h2>
-        <script>
-            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
-            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
-            countICalendar = 0;
-
-            function insertDropdownCalendar() {
-                // This if statement exists to prevent the list from loading more than once
-                if (countICalendar == 0) {
-                    var categorySel = document.getElementById("categoryICal");
-                    var job_typeSel = document.getElementById("job_typeICal");
-                    var i = 0;
-                    for (var x in categoryObject) {
-                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                        i++
-                    }
-                    i = 0;
-                    for (var x in job_typeObject) {
-                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                        i++
-                    }
-                    countICalendar = 1;
-                }
-            }
-
-        </script>
-
-        <div class="container">
-            <form action="insert_complete" method='post' enctype='mutlipart/form-data'>
-                {% csrf_token %}
-
                 <div class="row">
                     <div class="col-25">
                         <label>Date</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" name="date" placeholder="Date of the visit (YYYY/mm/dd)">
+                        <input type="date" name="date" placeholder="Date of the visit (YYYY/mm/dd)">
                     </div>
                 </div>
 
-                <!-- Other form fields for inserting calendar data go here -->
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="surname" placeholder="Client's Surname (ex. PsARROS)">
+                    </div>
+                </div>
 
-                <input type="submit" id="submitButtonICalendar" value="Ready to submit on Database" onclick="buttonClickICalendar()">
-                <script type="text/javascript">
-                    function buttonClickICalendar() {
-                        window.alert("Submission complete! Thank you for your contribution!");
-                    }
-                </script>
-            </form>
-        </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="name" placeholder="Client's Name (ex. ThEODOROS)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="address" placeholder="Client's Address (ex. NIKHS 2)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>City</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="city" placeholder="City of the Above address (ex. ELLINIKO)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Telephone Number</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Job Type</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="job_type">
+                            <option value="" selected="selected">Reason of the visit (ex. ERROR)</option>
+                            {% for job_type in job_typeObject %}
+                                <option value="{{ job_type }}">{{ job_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Category</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="category">
+                            <option value="" selected="selected">Category of products (ex. ALARM)</option>
+                            {% for category in categoryObject %}
+                                <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <input type="submit" id="submitButtonSCalendar" value="Search">
+            </div>
+        </form>
+    </div>
+
+    <div id="insertCalendar" class="tabcontent">
+        <h1>Hello {{ name }}!!!!!!!!!</h1>
+        <h2>It's time to enter some data into the Database</h2>
+        <form action="insert_complete" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-25">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="date" name="date" placeholder="Date of the visit (YYYY/mm/dd)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="surname" placeholder="Client's Surname (ex. ΑΝΤΩΝΙΟΥ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="address" placeholder="Client's Address (ex. ΑΝΤΩΝΟΠΟΥΛΟΥ 10)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>City</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="city" placeholder="City of the Above address (ex. ΑΘΗΝΑ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Telephone Number</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Job Type</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="job_type">
+                            <option value="" selected="selected">Reason of the visit (ex. ERROR)</option>
+                            {% for job_type in job_typeObject %}
+                                <option value="{{ job_type }}">{{ job_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Category</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="category">
+                            <option value="" selected="selected">Category of products (ex. ALARM)</option>
+                            {% for category in categoryObject %}
+                                <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Cost</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="price" placeholder="Amount of money we asked for the visit (ex. 45.20)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Collection</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="paid" placeholder="Amount of money the client paid (ex. 32.70)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Comments</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="comments" placeholder="Comments">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Manual</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="file" name="file" placeholder="Manual (.pdf file with all pages in photos)">
+                    </div>
+                </div>
+
+                <input type="submit" id="submitButtonICalendar" value="Ready to submit on Database">
+            </div>
+        </form>
     </div>
 
     <div id="updateCalendar" class="tabcontent">
         <h1>Hello {{ name }}!!!!!!!!!</h1>
         <h2>Some Client's data needs to be updated/changed</h2>
-        <script>
-            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"]
-            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"]
-            countUCalendar = 0;
-
-            function updateDropdownCalendar() {
-                // This if statement exists to prevent the list from loading more than once
-                if (countUCalendar == 0) {
-                    var categorySel = document.getElementById("categoryUCal");
-                    var job_typeSel = document.getElementById("job_typeUCal");
-                    var i = 0;
-                    for (var x in categoryObject) {
-                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                        i++
-                    }
-                    i = 0;
-                    for (var x in job_typeObject) {
-                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                        i++
-                    }
-                    countUCalendar = 1;
-                }
-            }
-
-        </script>
-
-        <div class="container">
-            <form action="update_complete" method='post' enctype='mutlipart/form-data'>
-                {% csrf_token %}
-
+        <form action="update_complete" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container">
                 <div class="row">
                     <div class="col-25">
                         <label>Visit ID</label>
@@ -872,28 +991,157 @@
                     </div>
                 </div>
 
-                <!-- Other form fields for updating calendar data go here -->
+                <div class="row">
+                    <div class="col-25">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="date" name="date" placeholder="Date of the visit (YYYY/mm/dd)">
+                    </div>
+                </div>
 
-                <input type="submit" id="submitButtonUCalendar" value="Ready to submit on Database" onclick="buttonClickUCalendar()">
-                <script type="text/javascript">
-                    function buttonClickUCalendar() {
-                        window.alert("Update complete! Thank you for the fix");
-                    }
-                </script>
-            </form>
-        </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="surname" placeholder="Client's Surname (ex. ΑΝΤΩΝΙΟΥ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="address" placeholder="Client's Address (ex. ΑΝΤΩΝΟΠΟΥΛΟΥ 10)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>City</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="city" placeholder="City of the Above address (ex. ΑΘΗΝΑ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Telephone Number</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Job Type</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="job_type">
+                            <option value="" selected="selected">Reason of the visit (ex. ERROR)</option>
+                            {% for job_type in job_typeObject %}
+                                <option value="{{ job_type }}">{{ job_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Category</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="category">
+                            <option value="" selected="selected">Category of products (ex. ALARM)</option>
+                            {% for category in categoryObject %}
+                                <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Cost</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="price" placeholder="Amount of money we asked for the visit (ex. 45.20)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Collection</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="paid" placeholder="Amount of money the client paid (ex. 32.70)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Comments</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="comments" placeholder="Comments">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Manual</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="file" name="file" placeholder="Manual (.pdf file with all pages in photos)">
+                    </div>
+                </div>
+
+                <input type="submit" id="submitButtonUCalendar" value="Ready to submit on Database">
+            </div>
+        </form>
     </div>
 
-    <div id="client" class="tabcontent_head">
-        <!-- Add client-related content and functionality here -->
-        <h1>Client Section</h1>
-        <!-- Add client-related content and functionality here -->
-    </div>
-
-    <div id="reports" class="tabcontent_head">
-        <!-- Add reports-related content and functionality here -->
-        <h1>Reports Section</h1>
-        <!-- Add reports-related content and functionality here -->
-    </div>
 </div>
+
+<script>
+    function openTab(tabName, element, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
+        document.getElementById(tabName).style.display = "block";
+        element.style.backgroundColor = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
 {% endblock %}
