@@ -348,6 +348,377 @@
     {% endfor %}
 </div>
 
+<div id="client" class="tabcontent_head">
+    <h1>Hello {{ name }}!!!!!!!!!</h1>
+    <h2>You can work on the below functions regarding Clients</h2>
+
+    <!-- If we want to add a dropdown list to a specific field and we want this dropdown menu to load when we click the
+         "tablink"/tab we need to add something like this "searchDropdownClient();" before openPage(...). The same way
+         as we do it in the calendar section -->
+
+    <button class="tablink" onclick="openPage('searchClient', this, 'royalblue')">Search</button>
+    <button class="tablink" onclick="openPage('insertClient', this, 'crimson')" id="defaultOpen">Insert</button>
+    <button class="tablink" onclick="openPage('updateClient', this, 'lightgoldenrodyellow')">Update</button> 
+
+    <div id="searchClient" class="tabcontent">
+        
+        <h1>Hello {{ name }}!!!!!!!!!</h1>
+        <h2>Search by any of the below field or combination of them</h2>
+        <script>
+            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"];
+            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"];
+            countSClient = 0;
+
+            function searchDropdownClient() {
+                //this if exist to prevent the list to load more than one time and 
+                //it has to use different count pointer because it affects the other
+                //count variables because it is "global"
+                if (countSClient == 0) {
+                    //we need to use different elements (categoryS, categoryI and categoryU)
+                    //because after running the first *Dropdown function the others won't load
+                    var categorySel = document.getElementById("categorySClient");
+                    var job_typeSel = document.getElementById("job_typeSClient");
+                    var i = 0;
+                    for (var x in categoryObject) {
+                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                        i++;
+                    }
+                    i = 0;
+                    for (var x in job_typeObject) {
+                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                        i++;
+                    }
+                    countSClient = 1;
+                }
+            }
+        </script>
+
+        <div class="container">
+            <form action="search_complete_client" method='post'>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>ID</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="id" placeholder="Client's ID">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">   
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="surname" placeholder="Client's Surname (ex. PsARROS)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25"> 
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="name" placeholder="Client's Name (ex. ThEODOROS)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="address" placeholder="Client's Address (ex. NIKHS 2)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">      
+                        <label>City</label>
+                    </div>
+                    <div class="col-75">  
+                        {% csrf_token %}
+                        <input type="text" name="city" placeholder="City of the Above address (ex. ELLINIKO)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's Telephone Number</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                    </div>
+                </div>
+
+                <input type="submit" id ="submitButtonSClient" value="Search" >
+
+            </form>
+        </div>
+    </div>
+
+    <div id="insertClient" class="tabcontent">
+        
+        <h1>Hello {{ name }}!!!!!!!!!</h1>
+        <h2>It's time to enter some data into the Database</h2>
+        <script>
+            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"];
+            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"];
+            countIClient = 0;
+
+            function insertDropdownClient(){
+                //this if exist to prevent the list to load more than one time and 
+                //it has to use different count pointer because it affects the other
+                //count variables because it is "global"
+                if(countIClient == 0){
+                    //we need to use different elements (categoryS, categoryI and categoryU)
+                    //because after running the first *Dropdown function the others won't load
+                    var categorySel = document.getElementById("categoryIClient");
+                    var job_typeSel = document.getElementById("job_typeIClient");
+                    var i = 0;
+                    for (var x in categoryObject) {
+                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                        i++;
+                    }
+                    i = 0;
+                    for (var x in job_typeObject) {
+                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                        i++;
+                    }
+                    countIClient = 1;
+                }
+            } 
+        </script>
+
+        <div class="container">
+            <form action="insert_complete_client" method='post'>
+
+                <div class="row">
+                    <div class="col-25">   
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="surname" placeholder="Client's Surname (ex. ΑΝΤΩΝΙΟΥ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25"> 
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="address" placeholder="Client's Address (ex. ΑΝΤΩΝΟΠΟΥΛΟΥ 10)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">      
+                        <label>City</label>
+                    </div>
+                    <div class="col-75">  
+                        {% csrf_token %}
+                        <input type="text" name="city" placeholder="City of the Above address (ex. ΑΘΗΝΑ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's Telephone Number</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Comments</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="comments" placeholder="Comments for the Client">
+                    </div>
+                </div>
+
+                <input type="submit" id ="submitButtonIClient" value="Ready to submit on Database" onclick="buttonClickIClient()">
+
+                <script type="text/javascript">
+                    function buttonClickIClient(){
+                        window.alert("Submission complete! Thank you for your contribution!");
+                    }
+                </script>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="updateClient" class="tabcontent">
+        
+        <h1>Hello {{ name }}!!!!!!!!!</h1>
+        <h2>Some Client's data needs to be updated/changed</h2>
+        <script>
+            var categoryObject = ["ALARM", "DOORPHONE", "SATELLITE", "TERRESTRIAL", "CCTV", "NETWORK", "FIRE", "TELEPHONE CENTER", "OTHER"];
+            var job_typeObject = ["INSTALLATION", "ERROR", "SERVICE", "ADDITION", "REMAKE", "CHECK", "CALIBRATION", "OFFER", "COLLECTION", "OTHER"];
+            countUClient = 0;
+
+            function updateDropdownClient() {
+                //this if exist to prevent the list to load more than one time and 
+                //it has to use different count pointer because it affects the other
+                //count variables because it is "global"
+                if (countUClient == 0) {
+                    //we need to use different elements (categoryS, categoryI and categoryU)
+                    //because after running the first *Dropdown function the others won't load
+                    var categorySel = document.getElementById("categoryUClient");
+                    var job_typeSel = document.getElementById("job_typeUClient");
+                    var i = 0;
+                    for (var x in categoryObject) {
+                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
+                        i++;
+                    }
+                    i = 0;
+                    for (var x in job_typeObject) {
+                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
+                        i++;
+                    }
+                    countUClient = 1;
+                }
+            }
+        </script>
+
+        <div class="container">
+            <form action="update_complete_client" method='post'>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's ID</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="id" placeholder="The ID of the client you want to change">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">   
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="surname" placeholder="Client's Surname (ex. ΑΝΤΩΝΙΟΥ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25"> 
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        <input type="text" name="address" placeholder="Client's Address (ex. ΑΝΤΩΝΟΠΟΥΛΟΥ 10)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">      
+                        <label>City</label>
+                    </div>
+                    <div class="col-75">  
+                        {% csrf_token %}
+                        <input type="text" name="city" placeholder="City of the Above address (ex. ΑΘΗΝΑ)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's Telephone Number</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">        
+                        <label>Comments</label>
+                    </div>
+                    <div class="col-75"> 
+                        {% csrf_token %}
+                        <input type="text" name="comments" placeholder="Comments for the Client">
+                    </div>
+                </div>
+
+                <input type="submit" id="submitButtonUClient" value="Ready to submit on Database" onclick="buttonClickUClient()">
+
+                <script type="text/javascript">
+                    function buttonClickUClient(){
+                        window.alert("Update complete! Thank you for the fix");
+                    }
+                </script>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="calendar" class="tabcontent_head">
     <h1>Hello {{ name }}!!!!!!!!!</h1>
     <h2>You can work on the below functions regarding Calendar</h2>
