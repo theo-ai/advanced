@@ -76,13 +76,23 @@ WSGI_APPLICATION = 'psarrosent.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'psarrosEnt',
+#        'USER' : 'postgres',
+#        'PASSWORD' : 'root',
+#        'HOST' : 'localhost',
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'psarrosEnt',
-        'USER' : 'postgres',
-        'PASSWORD' : 'root',
-        'HOST' : 'localhost',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'theoGPT$psarrosEnt',
+        'USER' : 'theoGPT',
+        'PASSWORD' : 'mysql09870987',
+        'HOST' : 'theoGPT.mysql.pythonanywhere-services.com',
     }
 }
 
