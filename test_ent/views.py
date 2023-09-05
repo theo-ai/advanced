@@ -8,6 +8,7 @@ import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import CalendarForm  # Import your CalendarForm
 from .forms import ClientForm  # Import your ClientForm
+from .forms import calendarForm, clientForm
 
 def home(request):
     return render(request, 'home.html', {'name': 'theo'})
@@ -37,81 +38,60 @@ def db(request):
 
     return render(request, 'db.html', {'report': report})
 
+def search_complete(request):
+    if request.method == 'POST':
+        search_form = calendarForm(request.POST)
+        if search_form.is_valid():
+            args = {}
+            for field, value in search_form.cleaned_data.items():
+                if value:
+                    args[field] = value
+            search_results = calendar.objects.filter(**args)
+            return render(request, 'search_complete.html', {'search_results': search_results})
+    else:
+        search_form = calendarForm()
+    return render(request, 'search_complete.html', {'search_form': search_form})
+
 def insert_complete(request):
     if request.method == 'POST':
-        cal_form = CalendarForm(request.POST)
-        if cal_form.is_valid():
-            cal = cal_form.save(commit=False)
-            cal.save()
-
-            client_form = ClientForm(request.POST)
-            if client_form.is_valid():
-                client_obj, created = client.objects.get_or_create(
-                    surname=cal.surname,
-                    name=cal.name,
-                    address=cal.address,
-                    city=cal.city,
-                    phone=cal.phone,
-                    email=cal.email
-                )
+        cal_form = calendarForm(request.POST, request.FILES)
+        cl_form = clientForm(request.POST)
+        if cal_form.is_valid() and cl_form.is_valid():
+            cal_instance = cal_form.save()
+            cl_instance, created = client.objects.get_or_create(email=cal_instance.email)
+            cl_form = clientForm(request.POST, instance=cl_instance)
+            if cl_form.is_valid():
+                cl_form.save()
             return redirect('db')
     else:
-        cal_form = CalendarForm()
-        client_form = ClientForm()
+        cal_form = calendarForm()
+        cl_form = clientForm()
+    return render(request, 'insert_complete.html', {'cal_form': cal_form, 'cl_form': cl_form})
 
-    return render(request, 'insert_complete.html', {'cal_form': cal_form, 'client_form': client_form})
+def update_complete(request, id):
+    cal_instance = get_object_or_404(calendar, id=id)
+    cl_instance, created = client.objects.get_or_create(email=cal_instance.email)
 
-def search_complete(request):
-    ident = request.POST.get('id')
-    date_temp = request.POST.get('date')
-    # Convert string "date_temp" to datetime "date"
-    if date_temp:
-        date = datetime.datetime.strptime(date_temp, '%Y/%m/%d')
-    else:
-        date = None
-
-    # Similar code for other search parameters
-
-    args = Q()
-    if ident:
-        args &= Q(id=ident)
-    if date:
-        args &= Q(date=date)
-    # Add similar clauses for other search parameters
-
-    try:
-        search = calendar.objects.filter(args)
-    except calendar.DoesNotExist:
-        return render(request, 'db.html')
-
-    return render(request, 'search_complete.html', {'search': search})
-
-def update_complete(request):
-    ident = request.POST.get('id')
-
-    try:
-        cal = calendar.objects.get(id=ident)
-
-        # Update cal object with the provided data
-        cal_form = CalendarForm(request.POST, instance=cal)
-        if cal_form.is_valid():
+    if request.method == 'POST':
+        cal_form = calendarForm(request.POST, request.FILES, instance=cal_instance)
+        cl_form = clientForm(request.POST, instance=cl_instance)
+        if cal_form.is_valid() and cl_form.is_valid():
             cal_form.save()
+            cl_form.save()
+            return redirect('db')
+    else:
+        cal_form = calendarForm(instance=cal_instance)
+        cl_form = clientForm(instance=cl_instance)
 
-        # Update client object (if needed) with the provided data
-        client_obj, created = client.objects.get_or_create(
-            surname=cal.surname,
-            name=cal.name,
-            address=cal.address,
-            city=cal.city,
-            phone=cal.phone,
-            email=cal.email
-        )
-        client_form = ClientForm(request.POST, instance=client_obj)
-        if client_form.is_valid():
-            client_form.save()
+    return render(request, 'update_complete.html', {'cal_form': cal_form, 'cl_form': cl_form})
 
-        return redirect('db')
-    except calendar.DoesNotExist:
-        return render(request, 'db.html')
+# Add more views as needed...
 
-# Other views (search_complete_client, insert_complete_client, update_complete_client, etc.) can be similarly refactored and optimized.
+def about(request):
+    return render(request, 'about.html')
+
+def products(request):
+    return render(request, 'products.html')
+
+def contact(request):
+    return render(request, 'contact.html')
