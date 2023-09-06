@@ -2,7 +2,7 @@
 {% block content %}
 
 
-<script>    
+<script>
     function openPage(pageName, elmnt, color) {
         // Hide all elements with class="tabcontent" by default */
         var i, tabcontent, tablinks;
@@ -10,19 +10,19 @@
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
-        
+
         // Remove the background color of all tablinks/buttons
         tablinks = document.getElementsByClassName("tablink");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].style.backgroundColor = "";
         }
-        
+
         // Show the specific tab content
         document.getElementById(pageName).style.display = "block";
-        
+
         // Add the specific color to the button used to open the tab content
         elmnt.style.backgroundColor = color;
-        
+
     }
 
     function openPage_head(pageName, elmnt, color) {
@@ -32,23 +32,23 @@
         for (i = 0; i < tabcontent_head.length; i++) {
             tabcontent_head[i].style.display = "none";
         }
-        
+
         // Remove the background color of all tablinks/buttons
         tablinks_head = document.getElementsByClassName("tablink_head");
         for (i = 0; i < tablinks_head.length; i++) {
             tablinks_head[i].style.backgroundColor = "";
         }
-        
+
         // Show the specific tab content
         document.getElementById(pageName).style.display = "block";
-        
+
         // Add the specific color to the button used to open the tab content
         elmnt.style.backgroundColor = color;
-        
+
     }
 
     // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click(); 
+    document.getElementById("defaultOpen").click();
 
 </script>
 
@@ -163,7 +163,7 @@
     #updateClient {background-color: lightgoldenrodyellow; color: black}
     #searchCalendar {background-color: royalblue;}
     #insertCalendar {background-color: crimson;}
-    #updateCalendar {background-color: lightgoldenrodyellow; color: black} 
+    #updateCalendar {background-color: lightgoldenrodyellow; color: black}
 
 </style>
 
@@ -181,130 +181,130 @@
     <h2>Service Reports for the next 10 days</h2>
 
     <script>
-        /* This script use is to keep the Reports tab open in order to avoid having to reopen it every time we want to change 
+        /* This script use is to keep the Reports tab open in order to avoid having to reopen it every time we want to change
             the page of the reports */
         // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click(); 
+        document.getElementById("defaultOpen").click();
     </script>
-    
+
     {% for report in report %}
         <div class="container">
             {% csrf_token %}
             <form action="db" method='post'>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit ID</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.id != "" %}
                             <p>{{report.id}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Date of Visit</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.date != "" %}
                             <p>{{report.date}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.surname != "" %}
                             <p>{{report.surname}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.name != "" %}
                             <p>{{report.name}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.address != "" %}
                             <p>{{report.address}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>City of the Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.city != "" %}
                             <p>{{report.city}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.phone != "" %}
                             <p>{{report.phone}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.id != "" %}
                             <a href="mailto:{{report.email}}">{{report.email}}</a>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Reason of Visit</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.job_type != "" %}
                             <p>{{report.job_type}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Category of Product</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.category != "" %}
                             <p>{{report.category}}</p>
@@ -313,10 +313,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Cost</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.price != "" %}
                             <p>{{report.price}}</p>
@@ -325,10 +325,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Money Client paid for the Visit</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.paid != "" %}
                             <p>{{report.paid}}</p>
@@ -337,19 +337,19 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Comments</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         {% if report.comments != "" %}
                             <p>{{report.comments}}</p>
                         {% endif %}
                     </div>
                 </div>
-        
+
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Installation Manual</label>
                     </div>
                     <div class="col-75">
@@ -359,7 +359,7 @@
                         {% endif %}
                     </div>
                 </div>
-        
+
             </form>
         </div>
     {% endfor %}
@@ -369,17 +369,17 @@
             {% if report.has_previous %}
                 <a href="?page={{ report.previous_page_number }}"><< Previous</a>
             {% endif %}
-    
+
             <span class="current">
                 Page {{ report.number }} of {{ report.paginator.num_pages }}
             </span>
-    
+
             {% if report.has_next %}
                 <a href="?page={{ report.next_page_number }}">Next >></a>
             {% endif %}
         </span>
     </div>
-    
+
 </div>
 
 <div id="client" class="tabcontent_head">
@@ -392,42 +392,12 @@
 
     <button class="tablink" onclick="openPage('searchClient', this, 'royalblue')">Search</button>
     <button class="tablink" onclick="openPage('insertClient', this, 'crimson')" id="defaultOpen">Insert</button>
-    <button class="tablink" onclick="openPage('updateClient', this, 'lightgoldenrodyellow')">Update</button> 
+    <button class="tablink" onclick="openPage('updateClient', this, 'lightgoldenrodyellow')">Update</button>
 
     <div id="searchClient" class="tabcontent">
-        
+
         <h1>Hello {{name}}!!!!!!!!!</h1>
         <h2>Search by any of the below field or combination of them</h2>
-        <script >
-
-            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"] 
-            var job_typeObject = ["INSTALLATION","ERROR","SERVICE","ADDITION","REMAKE","CHECK","CALIBRATION","OFFER","COLLECTION","OTHER"]
-            countSClient=0;
-
-            function searchDropdownClient() {
-                //this if exist to prevent the list to load more than one time and 
-                //it has to use different count pointer because it affects the other
-                //count variables because it is "global"
-                if(countSClient==0){
-                    //we need to use different elements (categoryS, categoryI and categoryU)
-                    //because after running the first *Dropdown function the others won't load
-                    var categorySel = document.getElementById("categorySCLient");
-                    var job_typeSel = document.getElementById("job_typeSCLient");
-                    var i=0;
-                    for (var x in categoryObject) {
-                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                        i++
-                    }
-                    i=0;
-                    for (var x in job_typeObject) {
-                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                        i++
-                    }
-                    countSClient=1;
-                }
-            } 
-
-        </script>
 
         <div class="container">
             <form action="search_complete_client" method='post'>
@@ -443,7 +413,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">   
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
                     <div class="col-75">
@@ -453,17 +423,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25"> 
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Client's Name (ex. ThEODOROS)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
                     <div class="col-75">
@@ -473,30 +443,30 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">      
+                    <div class="col-25">
                         <label>City</label>
                     </div>
-                    <div class="col-75">  
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="city" placeholder="City of the Aabove address (ex. ELLINIKO)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone Number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
                     </div>
@@ -510,45 +480,15 @@
     </div>
 
     <div id="insertClient" class="tabcontent">
-        
+
         <h1>Hello {{name}}!!!!!!!!!</h1>
         <h2>It's time to enter some data into the Database</h2>
-        <script >
-            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"] 
-            var job_typeObject = ["INSTALLATION","ERROR","SERVICE","ADDITION","REMAKE","CHECK","CALIBRATION","OFFER","COLLECTION","OTHER"]
-            countIClient=0;
-
-            function insertDropdownClient(){
-                //this if exist to prevent the list to load more than one time and 
-                //it has to use different count pointer because it affects the other
-                //count variables because it is "global"
-                if(countIClient==0){
-                    //we need to use different elements (categoryS, categoryI and categoryU)
-                    //because after running the first *Dropdown function the others won't load
-                    var categorySel = document.getElementById("categoryICLient");
-                    var job_typeSel = document.getElementById("job_typeICLient");
-                    var i=0;
-                    for (var x in categoryObject) {
-                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                        i++
-                    }
-                    i=0;
-                    for (var x in job_typeObject) {
-                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                        i++
-                    }
-                    countIClient=1;
-                }
-            } 
-            
-
-        </script>
 
         <div class="container">
             <form action="insert_complete_client" method='post'>
 
                 <div class="row">
-                    <div class="col-25">   
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
                     <div class="col-75">
@@ -558,17 +498,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25"> 
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
                     <div class="col-75">
@@ -578,40 +518,40 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">      
+                    <div class="col-25">
                         <label>City</label>
                     </div>
-                    <div class="col-75">  
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="city" placeholder="City of the Aabove address (ex. ΑΘΗΝΑ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone Number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Comments</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="comments" placeholder="Comments for the Client">
                     </div>
@@ -631,39 +571,9 @@
     </div>
 
     <div id="updateClient" class="tabcontent">
-        
+
         <h1>Hello {{name}}!!!!!!!!!</h1>
         <h2>Some Client's data needs to be updated/changed</h2>
-        <script >
-
-            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"] 
-            var job_typeObject = ["INSTALLATION","ERROR","SERVICE","ADDITION","REMAKE","CHECK","CALIBRATION","OFFER","COLLECTION","OTHER"]
-            countUClient=0;
-
-            function updateDropdownClient() {
-                //this if exist to prevent the list to load more than one time and 
-                //it has to use different count pointer because it affects the other
-                //count variables because it is "global"
-                if(countUClient==0){
-                    //we need to use different elements (categoryS, categoryI and categoryU)
-                    //because after running the first *Dropdown function the others won't load
-                    var categorySel = document.getElementById("categoryUCLient");
-                    var job_typeSel = document.getElementById("job_typeUCLient");
-                    var i=0;
-                    for (var x in categoryObject) {
-                        categorySel.options[categorySel.options.length] = new Option(categoryObject[i], categoryObject[i]);
-                        i++
-                    }
-                    i=0;
-                    for (var x in job_typeObject) {
-                        job_typeSel.options[job_typeSel.options.length] = new Option(job_typeObject[i], job_typeObject[i]);
-                        i++
-                    }
-                    countUClient=1;
-                }
-            } 
-
-        </script>
 
         <div class="container">
             <form action="update_complete_client" method='post'>
@@ -679,7 +589,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">   
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
                     <div class="col-75">
@@ -689,17 +599,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25"> 
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
                     <div class="col-75">
@@ -709,40 +619,40 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">      
+                    <div class="col-25">
                         <label>City</label>
                     </div>
-                    <div class="col-75">  
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="city" placeholder="City of the Aabove address (ex. ΑΘΗΝΑ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone Number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Comments</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="comments" placeholder="Comments for the Client">
                     </div>
@@ -769,20 +679,20 @@
 
     <button class="tablink" onclick="searchDropdownCalendar();openPage('searchCalendar', this, 'royalblue')">Search</button>
     <button class="tablink" onclick="insertDropdownCalendar();openPage('insertCalendar', this, 'crimson')" id="defaultOpen">Insert</button>
-    <button class="tablink" onclick="updateDropdownCalendar();openPage('updateCalendar', this, 'lightgoldenrodyellow')">Update</button> 
+    <button class="tablink" onclick="updateDropdownCalendar();openPage('updateCalendar', this, 'lightgoldenrodyellow')">Update</button>
 
     <div id="searchCalendar" class="tabcontent">
-        
+
         <h1>Hello {{name}}!!!!!!!!!</h1>
         <h2>Search by any of the below field or combination of them</h2>
         <script >
 
-            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"] 
+            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"]
             var job_typeObject = ["INSTALLATION","ERROR","SERVICE","ADDITION","REMAKE","CHECK","CALIBRATION","OFFER","COLLECTION","OTHER"]
             countSCalendar=0;
 
             function searchDropdownCalendar() {
-                //this if exist to prevent the list to load more than one time and 
+                //this if exist to prevent the list to load more than one time and
                 //it has to use different count pointer because it affects the other
                 //count variables because it is "global"
                 if(countSCalendar==0){
@@ -802,7 +712,7 @@
                     }
                     countSCalendar=1;
                 }
-            } 
+            }
 
         </script>
 
@@ -830,7 +740,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">   
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
                     <div class="col-75">
@@ -840,17 +750,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25"> 
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Client's Name (ex. ThEODOROS)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
                     <div class="col-75">
@@ -860,37 +770,37 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">      
+                    <div class="col-25">
                         <label>City</label>
                     </div>
-                    <div class="col-75">  
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="city" placeholder="City of the Aabove address (ex. ELLINIKO)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone Number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">                
+                    <div class="col-25">
                         <label>Job Type</label>
                     </div>
                     <div class="col-75">
@@ -906,12 +816,12 @@
                         create the dropdown list/menu for the fixed types of jobs and categories -->
                     </div>
                 </div>
-                
+
                 <div class="row">
-                    <div class="col-25">     
+                    <div class="col-25">
                         <label>Category</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <select name="category" id="categorySCal">
                             <option value="" selected="selected">
@@ -934,16 +844,16 @@
     </div>
 
     <div id="insertCalendar" class="tabcontent">
-        
+
         <h1>Hello {{name}}!!!!!!!!!</h1>
         <h2>It's time to enter some data into the Database</h2>
         <script >
-            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"] 
+            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"]
             var job_typeObject = ["INSTALLATION","ERROR","SERVICE","ADDITION","REMAKE","CHECK","CALIBRATION","OFFER","COLLECTION","OTHER"]
             countICalendar=0;
 
             function insertDropdownCalendar(){
-                //this if exist to prevent the list to load more than one time and 
+                //this if exist to prevent the list to load more than one time and
                 //it has to use different count pointer because it affects the other
                 //count variables because it is "global"
                 if(countICalendar==0){
@@ -963,8 +873,8 @@
                     }
                     countICalendar=1;
                 }
-            } 
-            
+            }
+
 
         </script>
 
@@ -982,7 +892,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">   
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
                     <div class="col-75">
@@ -992,17 +902,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25"> 
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
                     <div class="col-75">
@@ -1012,37 +922,37 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">      
+                    <div class="col-25">
                         <label>City</label>
                     </div>
-                    <div class="col-75">  
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="city" placeholder="City of the Aabove address (ex. ΑΘΗΝΑ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone Number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">                
+                    <div class="col-25">
                         <label>Job Type</label>
                     </div>
                     <div class="col-75">
@@ -1058,12 +968,12 @@
                         create the dropdown list/menu for the fixed types of jobs and categories -->
                     </div>
                 </div>
-                
+
                 <div class="row">
-                    <div class="col-25">     
+                    <div class="col-25">
                         <label>Category</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <select name="category" id="categoryICal">
                             <option value="" selected="selected">
@@ -1078,40 +988,40 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Cost</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="price" placeholder="Amount of money we asked for the visit (ex. 45.20)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Collection</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="paid" placeholder="Amount of money the client paid (ex. 32.70)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Comments</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="comments" placeholder="Comments">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Manual</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="file" name="file" placeholder="Manual (.pdf file with all pages in photos)">
                     </div>
@@ -1132,17 +1042,17 @@
     </div>
 
     <div id="updateCalendar" class="tabcontent">
-        
+
         <h1>Hello {{name}}!!!!!!!!!</h1>
         <h2>Some Client's data needs to be updated/changed</h2>
         <script >
 
-            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"] 
+            var categoryObject = ["ALARM","DOORPHONE","SATELLITE","TERRESTRIAL","CCTV","NETWORK","FIRE","TELEPHONE CENTER","OTHER"]
             var job_typeObject = ["INSTALLATION","ERROR","SERVICE","ADDITION","REMAKE","CHECK","CALIBRATION","OFFER","COLLECTION","OTHER"]
             countUCalendar=0;
 
             function updateDropdownCalendar() {
-                //this if exist to prevent the list to load more than one time and 
+                //this if exist to prevent the list to load more than one time and
                 //it has to use different count pointer because it affects the other
                 //count variables because it is "global"
                 if(countUCalendar==0){
@@ -1162,7 +1072,7 @@
                     }
                     countUCalendar=1;
                 }
-            } 
+            }
 
         </script>
 
@@ -1190,7 +1100,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">   
+                    <div class="col-25">
                         <label>Client's Surname</label>
                     </div>
                     <div class="col-75">
@@ -1200,17 +1110,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25"> 
+                    <div class="col-25">
                         <label>Client's Name</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="name" placeholder="Client's Name (ex. ΑΝΤΩΝΙΟΣ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Address</label>
                     </div>
                     <div class="col-75">
@@ -1220,37 +1130,37 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">      
+                    <div class="col-25">
                         <label>City</label>
                     </div>
-                    <div class="col-75">  
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="city" placeholder="City of the Aabove address (ex. ΑΘΗΝΑ)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's Telephone Number</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="phone" placeholder="Client's Telephone (ex. 6912345678)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Client's E-mail Address</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">                
+                    <div class="col-25">
                         <label>Job Type</label>
                     </div>
                     <div class="col-75">
@@ -1266,12 +1176,12 @@
                         create the dropdown list/menu for the fixed types of jobs and categories -->
                     </div>
                 </div>
-                
+
                 <div class="row">
-                    <div class="col-25">     
+                    <div class="col-25">
                         <label>Category</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <select name="category" id="categoryUCal">
                             <option value="" selected="selected">
@@ -1286,40 +1196,40 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Cost</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="price" placeholder="Amount of money we asked for the visit (ex. 45.20)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Collection</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="paid" placeholder="Amount of money the client paid (ex. 32.70)">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Visit's Comments</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="text" name="comments" placeholder="Comments">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-25">        
+                    <div class="col-25">
                         <label>Manual</label>
                     </div>
-                    <div class="col-75"> 
+                    <div class="col-75">
                         {% csrf_token %}
                         <input type="file" name="file" placeholder="Manual (.pdf file with all pages in photos)">
                     </div>
