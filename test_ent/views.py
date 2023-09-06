@@ -2,12 +2,12 @@
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Calendar, Client
+from .models import calendar, client
 from django.db.models import Q
 import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import CalendarForm  # Import your CalendarForm
-from .forms import ClientForm  # Import your ClientForm
+#from .forms import CalendarForm  # Import your CalendarForm
+#from .forms import ClientForm  # Import your ClientForm
 from .forms import calendarForm, clientForm
 
 def home(request):
