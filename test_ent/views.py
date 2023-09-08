@@ -85,7 +85,25 @@ def update_complete(request, id):
 
     return render(request, 'update_complete.html', {'cal_form': cal_form, 'cl_form': cl_form})
 
-# Add more views as needed...
+def client_search(request):
+    if request.method == 'POST':
+        # Retrieve the search query from the form
+        search_query = request.POST.get('search_query')
+
+        # Query the clients based on partial matches on all attributes
+        clients = client.objects.filter(
+            Q(surname__icontains=search_query) |
+            Q(name__icontains=search_query) |
+            Q(address__icontains=search_query) |
+            Q(city__icontains=search_query) |
+            Q(phone__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(comments__icontains=search_query)
+        )
+
+        return render(request, 'client_search.html', {'clients': clients})
+    else:
+        return render(request, 'client_search.html', {'clients': None})
 
 def add(request):
 
