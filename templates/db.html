@@ -796,6 +796,8 @@
                     <div class="col-75">
                         {% csrf_token %}
                         <input type="email" name="email" placeholder="Client's E-mail Address (ex. example@example.com)">
+                        #added line below in a try to search a client before we insert a calendar entry
+                        <a href="{% url 'client_search' %}">Search for a client</a>
                     </div>
                 </div>
 
