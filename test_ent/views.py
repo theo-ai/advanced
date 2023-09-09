@@ -53,8 +53,15 @@ def search_complete(request):
                 return render(request, 'search_complete.html', {'search_results': search_results})
 
         elif form_type == 'client':
-            # Handle client search here if needed
-            pass
+            elif form_type == 'client':
+            search_form = clientForm(request.POST)
+            if search_form.is_valid():
+                args = {}
+                for field, value in search_form.cleaned_data.items():
+                    if value:
+                        args[field] = value
+                search_results = client.objects.filter(**args)
+                return render(request, 'client_search_complete.html', {'search_results': search_results})
 
     else:
         search_form = calendarForm()
@@ -81,8 +88,8 @@ def insert_complete(request):
                 return HttpResponse("Invalid client data")
 
     else:
-        cal_form = calendarForm()
-        cl_form = clientForm()
+        cal_form = calendarForm(instance=cal_instance)
+        cl_form = clientForm(instance=cl_instance)
     
     return HttpResponse("Invalid request")  # Return a response for GET requests or other cases
     
@@ -101,16 +108,20 @@ def update_complete(request, id):
                 cl_form.save()
                 return redirect('db')
 
-        elif form_type == 'client':
-            # Handle client update here if needed
-            pass
+       elif form_type == 'client':
+            cl_form = clientForm(request.POST)
+            if cl_form.is_valid():
+                cl_instance = cl_form.save()
+                return redirect('db')  # Redirect to a success page for client insertion
+            else:
+                return HttpResponse("Invalid client data")
 
     else:
         cal_form = calendarForm(instance=cal_instance)
         cl_form = clientForm(instance=cl_instance)
 
-    return render(request, 'update_complete.html', {'cal_form': cal_form, 'cl_form': cl_form})
-
+    return HttpResponse("Invalid request")  # Return a response for GET requests or other cases
+    
 def client_search(request):
     if request.method == 'POST':
         # Retrieve the search query from the form
