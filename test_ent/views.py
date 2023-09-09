@@ -1,6 +1,6 @@
 # views.py
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import calendar, client
 from django.db.models import Q
@@ -40,45 +40,71 @@ def db(request):
 
 def search_complete(request):
     if request.method == 'POST':
-        search_form = calendarForm(request.POST)
-        if search_form.is_valid():
-            args = {}
-            for field, value in search_form.cleaned_data.items():
-                if value:
-                    args[field] = value
-            search_results = calendar.objects.filter(**args)
-            return render(request, 'search_complete.html', {'search_results': search_results})
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'calendar':
+            search_form = calendarForm(request.POST)
+            if search_form.is_valid():
+                args = {}
+                for field, value in search_form.cleaned_data.items():
+                    if value:
+                        args[field] = value
+                search_results = calendar.objects.filter(**args)
+                return render(request, 'search_complete.html', {'search_results': search_results})
+
+        elif form_type == 'client':
+            # Handle client search here if needed
+            pass
+
     else:
         search_form = calendarForm()
     return render(request, 'search_complete.html', {'search_form': search_form})
 
 def insert_complete(request):
     if request.method == 'POST':
-        cal_form = calendarForm(request.POST, request.FILES)
-        cl_form = clientForm(request.POST)
-        if cal_form.is_valid() and cl_form.is_valid():
-            cal_instance = cal_form.save()
-            cl_instance, created = client.objects.get_or_create(email=cal_instance.email)
-            cl_form = clientForm(request.POST, instance=cl_instance)
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'calendar':
+            cal_form = calendarForm(request.POST, request.FILES)
+            if cal_form.is_valid():
+                cal_instance = cal_form.save()
+                return redirect('db')  # Redirect to a success page for calendar insertion
+            else:
+                return HttpResponse("Invalid calendar data")
+
+        elif form_type == 'client':
+            cl_form = clientForm(request.POST)
             if cl_form.is_valid():
-                cl_form.save()
-            return redirect('db')
+                cl_instance = cl_form.save()
+                return redirect('db')  # Redirect to a success page for client insertion
+            else:
+                return HttpResponse("Invalid client data")
+
     else:
         cal_form = calendarForm()
         cl_form = clientForm()
-    return render(request, 'insert_complete.html', {'cal_form': cal_form, 'cl_form': cl_form})
-
+    
+    return HttpResponse("Invalid request")  # Return a response for GET requests or other cases
+    
 def update_complete(request, id):
     cal_instance = get_object_or_404(calendar, id=id)
     cl_instance, created = client.objects.get_or_create(email=cal_instance.email)
 
     if request.method == 'POST':
-        cal_form = calendarForm(request.POST, request.FILES, instance=cal_instance)
-        cl_form = clientForm(request.POST, instance=cl_instance)
-        if cal_form.is_valid() and cl_form.is_valid():
-            cal_form.save()
-            cl_form.save()
-            return redirect('db')
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'calendar':
+            cal_form = calendarForm(request.POST, request.FILES, instance=cal_instance)
+            cl_form = clientForm(request.POST, instance=cl_instance)
+            if cal_form.is_valid() and cl_form.is_valid():
+                cal_form.save()
+                cl_form.save()
+                return redirect('db')
+
+        elif form_type == 'client':
+            # Handle client update here if needed
+            pass
+
     else:
         cal_form = calendarForm(instance=cal_instance)
         cl_form = clientForm(instance=cl_instance)
