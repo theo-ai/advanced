@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from .models import Client, Calendar
 from .forms import ClientForm, CalendarForm
+import datetime
 
 def home(request):
     # Your code to display reports (if any) goes here
