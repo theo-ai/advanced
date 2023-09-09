@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Update Calendar Entry</h1>
+    <form action="update_calendar_complete" method="post">
+        {% csrf_token %}
+
+        <!-- Client Details -->
+        <h2>Client Details</h2>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="surname"><strong>Surname:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="surname" value="{{ client.surname }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="name"><strong>Name:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="name" value="{{ client.name }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="address"><strong>Address:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="address" value="{{ client.address }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="city"><strong>City:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="city" value="{{ client.city }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="phone"><strong>Phone:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="phone" value="{{ client.phone }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="email"><strong>Email:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="email" name="email" value="{{ client.email }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="comments"><strong>Comments:</strong></label>
+            </div>
+            <div class="col-9">
+                <textarea name="comments" rows="4">{{ client.comments }}</textarea>
+            </div>
+        </div>
+
+        <!-- Calendar Details -->
+        <h2>Calendar Details</h2>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="date"><strong>Date:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="date" name="date" value="{{ calendar.date }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="job_type"><strong>Job Type:</strong></label>
+            </div>
+            <div class="col-9">
+                <select name="job_type" required>
+                    <option value="" disabled>Select Job Type</option>
+                    <option value="INSTALLATION" {% if calendar.job_type == 'INSTALLATION' %}selected{% endif %}>Installation</option>
+                    <option value="ERROR" {% if calendar.job_type == 'ERROR' %}selected{% endif %}>Error</option>
+                    <option value="SERVICE" {% if calendar.job_type == 'SERVICE' %}selected{% endif %}>Service</option>
+                    <option value="ADDITION" {% if calendar.job_type == 'ADDITION' %}selected{% endif %}>Addition</option>
+                    <option value="REMAKE" {% if calendar.job_type == 'REMAKE' %}selected{% endif %}>Remake</option>
+                    <option value="CHECK" {% if calendar.job_type == 'CHECK' %}selected{% endif %}>Check</option>
+                    <option value="CALIBRATION" {% if calendar.job_type == 'CALIBRATION' %}selected{% endif %}>Calibration</option>
+                    <option value="OFFER" {% if calendar.job_type == 'OFFER' %}selected{% endif %}>Offer</option>
+                    <option value="COLLECTION" {% if calendar.job_type == 'COLLECTION' %}selected{% endif %}>Collection</option>
+                    <option value="OTHER" {% if calendar.job_type == 'OTHER' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="category"><strong>Category:</strong></label>
+            </div>
+            <div class="col-9">
+                <select name="category" required>
+                    <option value="" disabled>Select Category</option>
+                    <option value="ALARM" {% if calendar.category == 'ALARM' %}selected{% endif %}>Alarm</option>
+                    <option value="DOORPHONE" {% if calendar.category == 'DOORPHONE' %}selected{% endif %}>Doorphone</option>
+                    <option value="SATELLITE" {% if calendar.category == 'SATELLITE' %}selected{% endif %}>Satellite</option>
+                    <option value="TERRESTRIAL" {% if calendar.category == 'TERRESTRIAL' %}selected{% endif %}>Terrestrial</option>
+                    <option value="CCTV" {% if calendar.category == 'CCTV' %}selected{% endif %}>CCTV</option>
+                    <option value="NETWORK" {% if calendar.category == 'NETWORK' %}selected{% endif %}>Network</option>
+                    <option value="FIRE" {% if calendar.category == 'FIRE' %}selected{% endif %}>Fire</option>
+                    <option value="TELEPHONE CENTER" {% if calendar.category == 'TELEPHONE CENTER' %}selected{% endif %}>Telephone Center</option>
+                    <option value="OTHER" {% if calendar.category == 'OTHER' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="price"><strong>Price:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="number" name="price" step="0.01" value="{{ calendar.price }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="paid"><strong>Paid:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="number" name="paid" step="0.01" value="{{ calendar.paid }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="comments"><strong>Comments:</strong></label>
+            </div>
+            <div class="col-9">
+                <textarea name="comments" rows="4">{{ calendar.comments }}</textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="installation_manual"><strong>Installation Manual:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="file" name="installation_manual" accept=".pdf">
+            </div>
+        </div>
+
+        <input type="submit" value="Submit Changes">
+    </form>
+</div>
+{% endblock %}
