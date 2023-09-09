@@ -13,7 +13,7 @@
         {% for client in clients %}
         <li>
             <a href="{% url 'insert_calendar' client.id %}?surname={{ client.surname }}&name={{ client.name }}&address={{ client.address }}&city={{ client.city }}&phone={{ client.phone }}&email={{ client.email }}&comments={{ client.comments }}">
-                {{ client.surname }}, {{ client.name }}
+                {{ client.surname }}, {{ client.name }} ({{ client.email }})
             </a>
         </li>
         {% endfor %}
