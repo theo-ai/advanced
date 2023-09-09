@@ -89,9 +89,9 @@ def insert_complete(request):
     else:
         cal_form = calendarForm(instance=cal_instance)
         cl_form = clientForm(instance=cl_instance)
-    
+
     return HttpResponse("Invalid request")  # Return a response for GET requests or other cases
-    
+
 def update_complete(request, id):
     cal_instance = get_object_or_404(calendar, id=id)
     cl_instance, created = client.objects.get_or_create(email=cal_instance.email)
@@ -101,26 +101,29 @@ def update_complete(request, id):
 
         if form_type == 'calendar':
             cal_form = calendarForm(request.POST, request.FILES, instance=cal_instance)
-            cl_form = clientForm(request.POST, instance=cl_instance)
-            if cal_form.is_valid() and cl_form.is_valid():
-                cal_form.save()
-                cl_form.save()
-                return redirect('db')
+            if cal_form.is_valid():
+                cal_instance = cal_form.save()
+                return redirect('db') # Redirect to a success page for client insertion
+            else:
+                return HttpResponse("Invalid calendar data")
 
-       elif form_type == 'client':
-            cl_form = clientForm(request.POST)
+        elif form_type == 'client':
+            cl_form = clientForm(request.POST, instance=cl_instance)
             if cl_form.is_valid():
                 cl_instance = cl_form.save()
-                return redirect('db')  # Redirect to a success page for client insertion
+                return redirect('db') # Redirect to a success page for client insertion
             else:
                 return HttpResponse("Invalid client data")
+
+        else:
+            return HttpResponse("Wrong Form Type")
 
     else:
         cal_form = calendarForm(instance=cal_instance)
         cl_form = clientForm(instance=cl_instance)
 
     return HttpResponse("Invalid request")  # Return a response for GET requests or other cases
-    
+
 def client_search(request):
     if request.method == 'POST':
         # Retrieve the search query from the form
