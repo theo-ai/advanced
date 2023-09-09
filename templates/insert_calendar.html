@@ -1,10 +1,156 @@
-<!-- insert_calendar.html -->
-<div id="insertCalendar" class="tabcontent">
-    <h1>Calendar Entry</h1>
-    <h2>Client Information:</h2>
-    <form method="post" action="{% url 'insert_calendar' client.id %}">
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Insert Calendar Entry</h1>
+    <form action="insert_calendar_complete" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ cal_form.as_p }}
-        <input type="submit" value="Submit Calendar Entry">
+
+        <!-- Client Details -->
+        <h2>Client Details</h2>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="surname"><strong>Surname:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="surname" value="{{ client.surname }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="name"><strong>Name:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="name" value="{{ client.name }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="address"><strong>Address:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="address" value="{{ client.address }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="city"><strong>City:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="city" value="{{ client.city }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="phone"><strong>Phone:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="phone" value="{{ client.phone }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="email"><strong>Email:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="email" name="email" value="{{ client.email }}" readonly>
+            </div>
+        </div>
+
+        <!-- Calendar Entry Details -->
+        <h2>Calendar Entry Details</h2>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="date"><strong>Date:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="date" name="date" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="job_type"><strong>Job Type:</strong></label>
+            </div>
+            <div class="col-9">
+                <select name="job_type" required>
+                    <option value="INSTALLATION">INSTALLATION</option>
+                    <option value="ERROR">ERROR</option>
+                    <option value="SERVICE">SERVICE</option>
+                    <option value="ADDITION">ADDITION</option>
+                    <option value="REMAKE">REMAKE</option>
+                    <option value="CHECK">CHECK</option>
+                    <option value="CALIBRATION">CALIBRATION</option>
+                    <option value="OFFER">OFFER</option>
+                    <option value="COLLECTION">COLLECTION</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="category"><strong>Category:</strong></label>
+            </div>
+            <div class="col-9">
+                <select name="category" required>
+                    <option value="ALARM">ALARM</option>
+                    <option value="DOORPHONE">DOORPHONE</option>
+                    <option value="SATELLITE">SATELLITE</option>
+                    <option value="TERRESTRIAL">TERRESTRIAL</option>
+                    <option value="CCTV">CCTV</option>
+                    <option value="NETWORK">NETWORK</option>
+                    <option value="FIRE">FIRE</option>
+                    <option value="TELEPHONE CENTER">TELEPHONE CENTER</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-3">
+                <label for="price"><strong>Price:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="number" name="price" step="0.01" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="paid"><strong>Paid:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="number" name="paid" step="0.01" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="comments"><strong>Comments:</strong></label>
+            </div>
+            <div class="col-9">
+                <textarea name="comments" rows="4"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="installation_manual"><strong>Installation Manual:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="file" name="installation_manual" accept=".pdf,.doc,.docx">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Calendar Entry</button>
     </form>
 </div>
+{% endblock %}
