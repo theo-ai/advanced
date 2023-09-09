@@ -53,15 +53,14 @@ def search_complete(request):
                 return render(request, 'search_complete.html', {'search_results': search_results})
 
         elif form_type == 'client':
-            elif form_type == 'client':
-            search_form = clientForm(request.POST)
-            if search_form.is_valid():
-                args = {}
-                for field, value in search_form.cleaned_data.items():
-                    if value:
-                        args[field] = value
-                search_results = client.objects.filter(**args)
-                return render(request, 'client_search_complete.html', {'search_results': search_results})
+        search_form = clientForm(request.POST)
+        if search_form.is_valid():
+            args = {}
+            for field, value in search_form.cleaned_data.items():
+                if value:
+                    args[field] = value
+            search_results = client.objects.filter(**args)
+            return render(request, 'client_search_complete.html', {'search_results': search_results})
 
     else:
         search_form = calendarForm()
