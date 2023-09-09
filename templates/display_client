@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Client Information</h1>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>ID:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.id }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Surname:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.surname }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Name:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.name }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Address:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.address }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>City:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.city }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Phone:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.phone }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Email:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.email }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Comments:</strong>
+        </div>
+        <div class="col-9">
+            {{ client.comments }}
+        </div>
+    </div>
+
+    <form method="POST" action="{% url 'search_client' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Search Another Client</button>
+    </form>
+</div>
+{% endblock %}
