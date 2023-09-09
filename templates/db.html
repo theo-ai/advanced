@@ -402,6 +402,10 @@
         <div class="container">
             <form action="search_complete" method='post'>
 
+                //the following two rows are here in order to make one function for search, insert and update for both client and calendar
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="client">
+
                 <div class="row">
                     <div class="col-25">
                         <label>ID</label>
@@ -486,6 +490,10 @@
 
         <div class="container">
             <form action="insert_complete" method='post'>
+
+                //the following two rows are here in order to make one function for search, insert and update for both client and calendar
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="client">
 
                 <div class="row">
                     <div class="col-25">
@@ -577,6 +585,10 @@
 
         <div class="container">
             <form action="update_complete" method='post'>
+
+                //the following two rows are here in order to make one function for search, insert and update for both client and calendar
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="client">
 
                 <div class="row">
                     <div class="col-25">
@@ -718,6 +730,9 @@
 
         <div class="container">
             <form action="search_complete" method='post'>
+                //the following two rows are here in order to make one function for search, insert and update for both client and calendar
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="calendar">
 
                 <div class="row">
                     <div class="col-25">
@@ -880,6 +895,10 @@
 
         <div class="container">
             <form action="insert_complete" method='post' enctype='mutlipart/form-data'>
+
+                //the following two rows are here in order to make one function for search, insert and update for both client and calendar
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="calendar">
 
                 <div class="row">
                     <div class="col-25">
@@ -1102,6 +1121,10 @@
 
         <div class="container">
             <form action="update_complete" method='post' enctype='mutlipart/form-data'>
+                
+                //the following two rows are here in order to make one function for search, insert and update for both client and calendar
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="calendar">
 
                 <div class="row">
                     <div class="col-25">
