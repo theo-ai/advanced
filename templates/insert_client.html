@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Insert Client</h1>
+    <form action="insert_client_complete" method="post">
+        {% csrf_token %}
+
+        <!-- Client Details -->
+        <h2>Client Details</h2>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="surname"><strong>Surname:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="surname" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="name"><strong>Name:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="name" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="address"><strong>Address:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="address" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="city"><strong>City:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="city" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="phone"><strong>Phone:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="text" name="phone" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="email"><strong>Email:</strong></label>
+            </div>
+            <div class="col-9">
+                <input type="email" name="email" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3">
+                <label for="comments"><strong>Comments:</strong></label>
+            </div>
+            <div class="col-9">
+                <textarea name="comments" rows="4" cols="50"></textarea>
+            </div>
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}
