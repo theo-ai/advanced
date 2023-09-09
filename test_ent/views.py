@@ -183,6 +183,15 @@ def insert_calendar(request, client_id):
         # You can customize the error handling as needed
         return render(request, 'client_not_found.html')
 
+def get_calendar_entries(request):
+    # Fetch calendar entries from the database
+    calendar_entries = calendar.objects.all()
+
+    # Convert the data to JSON
+    data = [{'date': entry.date, 'surname': entry.surname, 'name': entry.name} for entry in calendar_entries]
+
+    return JsonResponse(data, safe=False)
+
 def add(request):
 
     val1 = int(request.POST['num1'])
