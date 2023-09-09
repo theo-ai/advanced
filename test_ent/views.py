@@ -49,18 +49,14 @@ def search_complete(request):
                 for field, value in search_form.cleaned_data.items():
                     if value:
                         args[field] = value
-                search_results = calendar.objects.filter(**args)
-                return render(request, 'search_complete.html', {'search_results': search_results})
+                search = calendar.objects.filter(**args)
+                return render(request, 'search_complete.html', {'search': search})
 
         elif form_type == 'client':
-            search_form = clientForm(request.POST)
-            if search_form.is_valid():
-                args = {}
-                for field, value in search_form.cleaned_data.items():
-                    if value:
-                        args[field] = value
-                search_results = client.objects.filter(**args)
-                return render(request, 'client_search_complete.html', {'search_results': search_results})
+            client_data = {key: request.POST[key] for key in ['id', 'surname', 'name', 'address', 'city', 'phone', 'email']}
+            args = {key: value for key, value in client_data.items() if value}
+            search_results = client.objects.filter(**args)
+            return render(request, 'search_complete_client.html', {'search': search_results})
 
     else:
         search_form = calendarForm()
