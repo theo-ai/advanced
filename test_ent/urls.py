@@ -5,7 +5,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('db/', views.db, name='db'),
     path('search_client/', views.search_client, name='search_client'),
-    path('search_complete/', views.search_complete, name='search_complete'),
+    #there is no need for that
+    #path('search_complete/', views.search_complete, name='search_complete'),
     path('display_client/<int:client_id>/', views.display_client, name='display_client'),
     path('insert_client/', views.insert_client, name='insert_client'),
     path('insert_complete/', views.insert_complete, name='insert_complete'),
