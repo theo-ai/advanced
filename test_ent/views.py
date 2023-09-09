@@ -65,7 +65,7 @@ def insert_client(request):
             form.save()
             return HttpResponse("Client added successfully.")
     else:
-    form = ClientForm()
+        form = ClientForm()
   
     return render(request, 'insert_client.html', {'form': form})
 
