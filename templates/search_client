@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Search Clients</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Search Clients</button>
+    </form>
+
+    <hr>
+
+    {% if clients %}
+    <h2>Search Results</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Surname</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.id }}</td>
+                <td>{{ client.surname }}</td>
+                <td>{{ client.name }}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.city }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.email }}</td>
+                <td>
+                    <a href="{% url 'display_client' client.id %}" class="btn btn-info">Show Client Data</a>
+                    <a href="{% url 'insert_calendar' client.id %}" class="btn btn-success">Insert Calendar</a>
+                    <a href="{% url 'update_client' client.id %}" class="btn btn-warning">Update Client</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No clients found matching your criteria.</p>
+    {% endif %}
+</div>
+{% endblock %}
