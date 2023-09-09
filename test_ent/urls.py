@@ -17,4 +17,5 @@ urlpatterns = [
     path('contact',views.contact, name='contact'),
     path('client_search/', views.client_search, name='client_search'),
     path('insert_calendar/<int:client_id>/', views.insert_calendar, name='insert_calendar'),
+    path('get_calendar_entries/', views.get_calendar_entries, name='get_calendar_entries'),
 ]
