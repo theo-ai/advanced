@@ -26,7 +26,7 @@ def home(request):
     dateEnd = datetime.datetime.now() - datetime.timedelta(days=(2*365)-30)
     days = 335
 
-    report_list = calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
+    report_list = Calendar.objects.raw("SELECT * FROM test_ent_calendar WHERE ( (job_type = 'ERROR' OR job_type = 'INSTALLATION' OR job_type = 'REMAKE' OR job_type = 'SERVICE') AND (category = 'ALARM' OR category = 'FIRE' OR category = 'CCTV') ) AND (date >= %s AND date <= %s)", [dateStart,dateEnd])
     # Show 1 calendar entry per page
     paginator = Paginator(report_list, 1)
 
