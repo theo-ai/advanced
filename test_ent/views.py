@@ -149,6 +149,40 @@ def client_search(request):
     else:
         return render(request, 'client_search.html', {'clients': None})
 
+def insert_calendar(request, client_id):
+    try:
+        # Retrieve the selected client based on the provided client_id
+        selected_client = client.objects.get(id=client_id)
+
+        if request.method == 'POST':
+            # Handle the form submission for calendar entry here
+            cal_form = calendarForm(request.POST, request.FILES)
+            if cal_form.is_valid():
+                # Save the calendar entry with the selected client
+                cal_instance = cal_form.save(commit=False)
+                cal_instance.email = selected_client.email  # Set the client's email
+                cal_instance.save()
+                return redirect('db')  # Redirect to your desired URL after saving
+
+        else:
+            # Create a calendar form with the selected client's data pre-populated
+            cal_form = calendarForm(initial={
+                'surname': selected_client.surname,
+                'name': selected_client.name,
+                'address': selected_client.address,
+                'city': selected_client.city,
+                'phone': selected_client.phone,
+                'email': selected_client.email,
+                # Add other fields here
+            })
+
+        return render(request, 'insert_calendar.html', {'cal_form': cal_form, 'client': selected_client})
+
+    except client.DoesNotExist:
+        # Handle the case where the client with the given ID doesn't exist
+        # You can customize the error handling as needed
+        return render(request, 'client_not_found.html')
+
 def add(request):
 
     val1 = int(request.POST['num1'])
