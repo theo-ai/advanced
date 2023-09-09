@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Search Calendar Entries</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Search Calendar Entries</button>
+    </form>
+
+    <hr>
+
+    {% if calendar_entries %}
+    <h2>Search Results</h2>
+    <div class="row">
+        <div class="col-md-2"><strong>ID</strong></div>
+        <div class="col-md-2"><strong>Date</strong></div>
+        <div class="col-md-2"><strong>Surname</strong></div>
+        <div class="col-md-2"><strong>Name</strong></div>
+        <div class="col-md-2"><strong>Job Type</strong></div>
+        <div class="col-md-2"><strong>Category</strong></div>
+    </div>
+    {% for entry in calendar_entries %}
+    <div class="row">
+        <div class="col-md-2">{{ entry.id }}</div>
+        <div class="col-md-2">{{ entry.date }}</div>
+        <div class="col-md-2">{{ entry.client.surname }}</div>
+        <div class="col-md-2">{{ entry.client.name }}</div>
+        <div class="col-md-2">{{ entry.job_type }}</div>
+        <div class="col-md-2">{{ entry.category }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" action="{% url 'display_calendar' entry.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info">Show Calendar Data</button>
+            </form>
+            <form method="POST" action="{% url 'update_calendar' entry.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Update Calendar</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No calendar entries found matching your criteria.</p>
+    {% endif %}
+</div>
+{% endblock %}
