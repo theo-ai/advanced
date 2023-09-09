@@ -1,0 +1,10 @@
+<!-- insert_calendar.html -->
+<div id="insertCalendar" class="tabcontent">
+    <h1>Calendar Entry</h1>
+    <h2>Client Information:</h2>
+    <form method="post" action="{% url 'insert_calendar' client.id %}">
+        {% csrf_token %}
+        {{ cal_form.as_p }}
+        <input type="submit" value="Submit Calendar Entry">
+    </form>
+</div>
