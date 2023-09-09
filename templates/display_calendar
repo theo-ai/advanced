@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Calendar Entry Information</h1>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Date:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.date }}
+        </div>
+    </div>
+
+    <!-- Display Client Information -->
+    <h2>Client Information</h2>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Surname:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.client.surname }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Name:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.client.name }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Address:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.client.address }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>City:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.client.city }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Phone:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.client.phone }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Email:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.client.email }}
+        </div>
+    </div>
+
+    <!-- Display Calendar Information -->
+    <h2>Calendar Entry Details</h2>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Job Type:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.job_type }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Category:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.category }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Price:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.price }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Paid:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.paid }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Comments:</strong>
+        </div>
+        <div class="col-9">
+            {{ calendar.comments }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>Installation Manual:</strong>
+        </div>
+        <div class="col-9">
+            <a href="{{ calendar.installation_manual.url }}" target="_blank">{{ calendar.installation_manual.name }}</a>
+        </div>
+    </div>
+
+    <form method="POST" action="{% url 'search_calendar' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Search Another Calendar Entry</button>
+    </form>
+</div>
+{% endblock %}
