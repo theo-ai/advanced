@@ -1,14 +1,388 @@
 {% extends 'base.html' %}
+
 {% block content %}
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
 
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
 
-<h1>Hello {{name}}!!!!!!!!!</h1>
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
 
-<form action="add" method='post'>
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
 
-    {% csrf_token %}
-    Enter 1 : <input type="text" name="num1">
-    Enter 2 : <input type="text" name="num2">
-    <input type="submit" value="OK">
-</form>
+    }
+
+    function openPage_head(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent_head, tablinks_head;
+        tabcontent_head = document.getElementsByClassName("tabcontent_head");
+        for (i = 0; i < tabcontent_head.length; i++) {
+            tabcontent_head[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks_head = document.getElementsByClassName("tablink_head");
+        for (i = 0; i < tablinks_head.length; i++) {
+            tablinks_head[i].style.backgroundColor = "";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
+
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+
+<style>
+
+    /* Set height of body and the document to 100% to enable "full page tabs" */
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial;
+    }
+
+    /* Style tab links */
+    .tablink {
+        background-color: lightblue;
+        color: black;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        /* you need to change width in order to fit the desired amount of tabs */
+        width: 100%;
+    }
+
+    /* Style for top tab links (Client,Calendar,Reports) */
+    .tablink_head {
+        background-color: lightblue;
+        color: black;
+        float: left;
+        border: none;
+        outline: 1px;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        /* you need to change width in order to fit the desired amount of tabs */
+        width: 33.33%;
+    }
+
+    .tablink:hover {
+        background-color: #777;
+    }
+
+    .tablink_head:hover {
+        background-color: #777;
+    }
+
+    /* Style the tab content (and add height:100% for full page content) */
+    .tabcontent {
+        color: white;
+        display: none;
+        padding: 100px 20px;
+        height: 100%;
+    }
+
+    /* Style for the top tabs (Client,Calendar,Reports) */
+    .tabcontent_head {
+        color: white;
+        display: none;
+        padding: 100px 20px;
+        height: 100%;
+    }
+
+    input[type=email]{
+        width: 100%;
+        padding: 12px 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style for navigation through pages */
+    .step-links {
+        color: black;
+        float: middle;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        /* you need to change width in order to fit the desired amount of tabs */
+        /*width: 100%;*/
+    }
+
+    /* Style for navigation through pages */
+    .step-links a {
+        float: middle;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        /* you need to change width in order to fit the desired amount of tabs */
+        /*width: 100%;*/
+    }
+
+    /* Style the paginator */
+    .pagination {
+        border-radius: 5px;
+        background-color: #fff;
+        padding: 1%;
+    }
+
+    #client {background-color: #aaa; color: black}
+    #calendar {background-color: #888; color: black}
+    #reports {background-color: #444;}
+
+    #searchClient {background-color: royalblue;}
+    #insertClient {background-color: crimson;}
+    #updateClient {background-color: lightgoldenrodyellow; color: black}
+    #searchCalendar {background-color: royalblue;}
+    #insertCalendar {background-color: crimson;}
+    #updateCalendar {background-color: lightgoldenrodyellow; color: black}
+
+</style>
+
+<!-- These are the buttons (tabcontent_head) for the top navigation (client/calendar). When you press one it calls the onclick functions
+     which are determined herebelow. Then the proper <div> opens. Finally, the new buttons (tabcontent) open and the same procedure
+     starts all over again, up until you press a "submit" button. The "openPage" and "openPage_head" functions are inside the script
+     in the top of the page. The scripts inside the search, insert and update <div> are for loading the pre-selected dropdown menus
+     for the job_type and category -->
+<!-- the following 3 lines are commented in order to get rid of the tabs which are not needed in this case
+<button class="tablink_head" onclick="openPage_head('client', this, '#aaa')">Client</button>
+<button class="tablink_head" onclick="openPage_head('calendar', this, '#888')">Calendar</button>
+<button class="tablink_head" onclick="openPage_head('reports', this, '#444')" id="defaultOpen">Reports</button>
+-->
+<!-- changing the following row to fix the tabs which are not wanted in this case
+<div id="reports" class="tabcontent_head">
+-->
+<div id="reports" class="tablink">
+
+    <h2>Service Reports for the next 10 days</h2>
+
+    <script>
+        /* This script use is to keep the Reports tab open in order to avoid having to reopen it every time we want to change
+            the page of the reports */
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+
+    {% for report in report %}
+        <div class="container">
+            {% csrf_token %}
+            <form action="db" method='post'>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit ID</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.id != "" %}
+                            <p>{{report.id}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Date of Visit</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.date != "" %}
+                            <p>{{report.date}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Surname</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.surname != "" %}
+                            <p>{{report.surname}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Name</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.name != "" %}
+                            <p>{{report.name}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Address</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.address != "" %}
+                            <p>{{report.address}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>City of the Address</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.city != "" %}
+                            <p>{{report.city}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's Telephone number</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.phone != "" %}
+                            <p>{{report.phone}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Client's E-mail Address</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.id != "" %}
+                            <a href="mailto:{{report.email}}">{{report.email}}</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Reason of Visit</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.job_type != "" %}
+                            <p>{{report.job_type}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Category of Product</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.category != "" %}
+                            <p>{{report.category}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Cost</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.price != "" %}
+                            <p>{{report.price}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Money Client paid for the Visit</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.paid != "" %}
+                            <p>{{report.paid}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Visit's Comments</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.comments != "" %}
+                            <p>{{report.comments}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Installation Manual</label>
+                    </div>
+                    <div class="col-75">
+                        {% csrf_token %}
+                        {% if report.installationManual != "" %}
+                            <a href="{{report.installationManual.url}}">Manual</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if report.has_previous %}
+                <a href="?page={{ report.previous_page_number }}"><< Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ report.number }} of {{ report.paginator.num_pages }}
+            </span>
+
+            {% if report.has_next %}
+                <a href="?page={{ report.next_page_number }}">Next >></a>
+            {% endif %}
+        </span>
+    </div>
+
+</div>
+
 {% endblock %}
